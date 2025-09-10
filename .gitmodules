@@ -1,0 +1,15 @@
+[submodule "backend/services/product-micro"]
+	path = backend/services/product-micro
+	url = https://github.com/BouzirJawad/product-micro.git
+[submodule "backend/services/fabrication-micro"]
+	path = backend/services/fabrication-micro
+	url = https://github.com/BouzirJawad/fabrication-micro.git
+[submodule "backend/services/cart-micro"]
+	path = backend/services/cart-micro
+	url = https://github.com/BouzirJawad/cart-micro.git
+[submodule "backend/services/order-micro"]
+	path = backend/services/order-micro
+	url = https://github.com/BouzirJawad/order-micro.git
+[submodule "backend/services/auth-micro"]
+	path = backend/services/auth-micro
+	url = https://github.com/BouzirJawad/auth-micro-.git
