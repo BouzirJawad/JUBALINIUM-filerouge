@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "concurrently \"npm run dev --prefix services/\" \"npm run dev --prefix services/\" \"npm run dev --prefix services/\" \"npm run dev --prefix services/\" \"nodemon server.js\""
+    "dev": "concurrently --names \"PRODUCT,FABRICATION,CART,AUTH,ORDER,GATEWAY\" --prefix-colors \"blue,magenta,green,yellow,cyan,red\" \"npm run dev --prefix services/product-micro\" \"npm run dev --prefix services/fabrication-micro\" \"npm run dev --prefix services/cart-micro\" \"npm run dev --prefix services/auth-micro\" \"npm run dev --prefix services/order-micro\" \"nodemon server.js\"",
+    "install:all": "npm install && npm install --prefix services/product-micro && npm install --prefix services/fabrication-micro && npm install --prefix services/cart-micro && npm install --prefix services/auth-micro && npm install --prefix services/order-micro"
   },
   "dependencies": {
     "axios": "^1.10.0",
