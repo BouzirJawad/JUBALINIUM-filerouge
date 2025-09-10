@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const healthRoute = require("./routes/health")
-const setUpProxies =  require("./routes/proxies")
+const setUpProxies =  require("./proxies/proxies")
 require('dotenv').config()
 
 const app = express()
