@@ -3,29 +3,38 @@ const axios = require("axios");
 
 const authMiddleware = async (req, res, next) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
-
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "No token, authorization denied" });
+    const authHeader = req.header("Authorization");
+    if (!authHeader) {
+      req.user = { role: "guest" };
+      return next();
     }
 
+    const token = authHeader?.replace("Bearer ", "");
     const decoded = verifyToken(token);
-    const userRes = await axios.get(
-      `${process.env.AUTH_SERVICE_URL}/api/users/${decoded.userId}`
-    );
-    const user = userRes.data;
-    if (!user) {
-      return res.status(401).json({ message: "User not found! Token invalid" });
+    if (!decoded?.userId) {
+      return res.status(401).json({ message: "Invalid token payload" });
     }
 
-    req.user = user;
-    next();
+    try {
+      const userRes = await axios.get(
+        `${process.env.AUTH_SERVICE_URL}/api/users/${decoded.userId}`
+      );
+      const user = userRes.data;
+      if (!user) {
+        return res.status(401).json({ message: "User not found! Token invalid" });
+      }
+  
+      req.user = user;
+      req.token = token;
+      return next();
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        return res.status(401).json({ message: "User not found! Token invalid" });
+      }
+      return res.status(503).json({ message: "Auth service unavailable" });
+    }
   } catch (error) {
-    res
-      .status(401)
-      .json({ error: error.message || "Error, Token is not valid" });
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
