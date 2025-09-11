@@ -12,7 +12,7 @@ const proxyWithAuth = (path, target, useRoleMiddleware = true) => {
     createProxyMiddleware({
       target,
       changeOrigin: true,
-      pathRewrite: { [`^${path}`]: path },
+      pathRewrite: { ["^/"]: `${path}/` },
       onProxyReq: (proxyReq, req) => {
         if (req.user) {
           proxyReq.setHeader("x-user-id", req.user._id || req.user.userId);
@@ -32,7 +32,7 @@ const proxyWithAuth = (path, target, useRoleMiddleware = true) => {
 };
 
 module.exports = (app) => {
-  app.use(...proxyWithAuth("/api/auth", process.env.AUTH_SERVICE_URL, false));
+  app.use(...proxyWithAuth("/api/auth", process.env.AUTH_SERVICE_URL));
   app.use(...proxyWithAuth("/api/users", process.env.AUTH_SERVICE_URL));
   app.use(...proxyWithAuth("/api/products", process.env.PRODUCT_SERVICE_URL));
   app.use(...proxyWithAuth("/api/fabrication", process.env.FABRICATION_SERVICE_URL));

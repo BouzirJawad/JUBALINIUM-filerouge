@@ -17,19 +17,33 @@ const authMiddleware = async (req, res, next) => {
 
     try {
       const userRes = await axios.get(
-        `${process.env.AUTH_SERVICE_URL}/api/users/${decoded.userId}`
+        `${process.env.AUTH_SERVICE_URL}/api/users/${decoded.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const user = userRes.data;
       if (!user) {
-        return res.status(401).json({ message: "User not found! Token invalid" });
+        return res
+          .status(401)
+          .json({ message: "User not found! Token invalid" });
       }
-  
-      req.user = user;
+
+      req.user = decoded;
       req.token = token;
       return next();
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        return res.status(401).json({ message: "User not found! Token invalid" });
+        return res
+          .status(err.status)
+          .json({ message: "User not found! Token invalid" });
+      }
+      if (err.response && err.response?.data.message) {
+        return res
+          .status(err.status)
+          .json({ message: err.response?.data.message });
       }
       return res.status(503).json({ message: "Auth service unavailable" });
     }
