@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const healthRoute = require("./routes/health")
+const storeRoutes = require("./routes/store.routes")
 const setUpProxies =  require("./proxies/proxies")
 require('dotenv').config()
 
@@ -9,6 +10,7 @@ app.use(cors())
 
 //routes here
 app.use("/health", healthRoute)
+app.use("/store", storeRoutes)
 
 setUpProxies(app);
 

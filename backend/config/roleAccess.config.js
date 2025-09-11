@@ -31,6 +31,14 @@ module.exports = [
   { method: "PUT", path: "/api/fabrication-orders/:orderId", roles: ["admin", "client", "worker"] },
   { method: "DELETE", path: "/api/fabrication-orders/:orderId", roles: ["admin", "client", "worker"] },
 
+   //STORE ORDERS MICRO
+  { method: "GET", path: "/api/orders", roles: ["admin", "seller"] }, // Get all orders
+  { method: "GET", path: "/api/orders/:orderId", roles: ["admin", "seller", "client"] }, // Get single order by ID
+  { method: "GET", path: "/api/orders/user/:userId", roles: ["admin", "seller", "client"] }, // Get all orders for a user
+  { method: "POST", path: "/api/orders", roles: ["admin", "client"] }, // Create order
+  { method: "PUT", path: "/api/orders/:orderId", roles: ["admin", "client", "seller"] }, // Update order status
+  { method: "DELETE", path: "/api/orders/:orderId", roles: ["admin", "seller"] }, // Delete order
+
   // CART MICRO
   { method: "GET", path: "/api/cart/user/:userId", roles: ["client"] },
   { method: "POST", path: "/api/cart/user/:userId/items", roles: ["client"] },
@@ -46,5 +54,9 @@ module.exports = [
   { method: "PUT", path: "/api/cart/guest/:guestId", roles: ["guest"] }, // replace full cart
   { method: "DELETE", path: "/api/cart/guest/:guestId/clear", roles: ["guest"] },
   { method: "DELETE", path: "/api/cart/guest/:guestId", roles: ["guest", "admin"] },
-  { method: "POST", path: "/api/cart/merge", roles: ["client", "admin"] }
+  { method: "POST", path: "/api/cart/merge", roles: ["client", "admin"] },
+
+  //API GATEAWAY
+  { method: "POST", path: "/api/store/checkout", roles: ["client"] }
+
 ];
