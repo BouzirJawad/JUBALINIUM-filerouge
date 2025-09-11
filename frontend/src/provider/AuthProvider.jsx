@@ -16,6 +16,7 @@ const AuthProvider = ({ children }) => {
     setUser(newUser);
     localStorage.setItem("token", newToken);
     localStorage.setItem("user", JSON.stringify(newUser));
+    axios.defaults.headers.common["Authorization"] = "Bearer " + newToken;
   };
 
   const logout = () => {
@@ -23,18 +24,13 @@ const AuthProvider = ({ children }) => {
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    delete axios.defaults.headers.common["Authorization"];
   };
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-      axios.defaults.headers.common["Authorization"] = "Bearer " + storedToken;
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     }
-
     setLoading(false);
   }, []);
 
@@ -48,7 +44,7 @@ const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  const contectValue = useMemo(
+  const contextValue = useMemo(
     () => ({
       token,
       user,
@@ -60,7 +56,7 @@ const AuthProvider = ({ children }) => {
   );
 
   return (
-    <AuthContext.Provider value={contectValue}>
+    <AuthContext.Provider value={contextValue}>
       {" "}
       {children}{" "}
     </AuthContext.Provider>
