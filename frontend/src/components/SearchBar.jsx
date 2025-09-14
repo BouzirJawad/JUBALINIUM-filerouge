@@ -1,31 +1,19 @@
-import React from 'react'
-
-function SearchBar() {
+export default function SearchBar({ value, onChange }) {
   return (
-      <div className="max-w-md mx-auto pt-6 sm:pt-8 px-4">
-        <div className="relative">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search aluminum tools, products, services..."
-            className="pl-10 w-full rounded-md border border-gray-300 bg-white text-sm sm:text-base py-2"
-          />
-        </div>
-      </div>
-  )
+    <div className="flex w-full gap-3 max-w-md">
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Search products..."
+        className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-200 outline-none"
+      />
+      <button
+        type="button"
+        className="px-4 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700"
+      >
+        Search
+      </button>
+    </div>
+  );
 }
-
-export default SearchBar
