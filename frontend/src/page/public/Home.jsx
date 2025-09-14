@@ -1,14 +1,8 @@
-import Footer from "../../components/footer";
-import Navbar from "../../components/Navbar";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#eaeaea]">
-      {/* Header */}
-      <section>
-        <Navbar />
-      </section>
-
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -22,12 +16,16 @@ export default function HomePage() {
               craftsman, builder, or designer — we have you covered.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
-              <button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md">
-                Visit Store
-              </button>
-              <button className="border border-gray-300 text-gray-700 px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md">
-                View Fabrication
-              </button>
+              <Link to={"/store"}>
+                <button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md">
+                  Visit Store
+                </button>
+              </Link>
+              <Link to={"/fabrication"}>
+                <button className="border border-gray-300 text-gray-700 px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base rounded-md">
+                  View Fabrication
+                </button>
+              </Link>
             </div>
           </div>
           <div className="order-first md:order-last">
@@ -118,9 +116,11 @@ export default function HomePage() {
           </div>
 
           <div className="text-center mt-8 sm:mt-12">
-            <button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-8 sm:px-12 py-2 sm:py-3 text-sm sm:text-base">
-              Go to Store
-            </button>
+            <Link to={"/store"}>
+              <button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-8 sm:px-12 py-2 sm:py-3 text-sm sm:text-base">
+                Go to Store
+              </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -202,15 +202,13 @@ export default function HomePage() {
           </div>
 
           <div className="text-center mt-8 sm:mt-12">
-            <button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-8 sm:px-12 py-2 sm:py-3 text-sm sm:text-base">
-              Go to Fabrication
-            </button>
+            <Link to={"/fabrication"}>
+              <button className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-8 sm:px-12 py-2 sm:py-3 text-sm sm:text-base">
+                Go to Fabrication
+              </button>
+            </Link>
           </div>
         </div>
-      </section>
-
-      <section>
-        <Footer />
       </section>
     </div>
   );
