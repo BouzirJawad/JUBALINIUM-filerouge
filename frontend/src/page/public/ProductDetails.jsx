@@ -1,13 +1,10 @@
 // src/pages/ProductDetails.jsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { getProduct, getProducts } from "../../services/productService";
-import {
-  addItem,
-  addGuestItem,
-} from "../../services/cartService";
+import { addItem, addGuestItem } from "../../services/cartService";
 import { useAuth } from "../../provider/AuthProvider";
 
 export default function ProductDetails() {
@@ -24,9 +21,11 @@ export default function ProductDetails() {
 
         // Fetch similar products by category
         const all = await getProducts();
-        setSimilar(all.data.filter(
-          (p) => p.category === res.data.category && p._id !== res.data._id
-        ));
+        setSimilar(
+          all.data.filter(
+            (p) => p.category === res.data.category && p._id !== res.data._id
+          )
+        );
       } catch (err) {
         toast.error("Failed to load product details");
       }
@@ -99,21 +98,23 @@ export default function ProductDetails() {
           <h2 className="text-xl font-semibold mb-4">Similar Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {similar.map((item) => (
-              <motion.div
-                key={item._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="bg-gray-50 rounded-lg shadow p-4 cursor-pointer hover:shadow-md"
-              >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-40 object-cover rounded-md mb-2"
-                />
-                <h3 className="text-lg font-semibold">{item.name}</h3>
-                <p className="text-blue-600 font-medium">{item.price} DH</p>
-              </motion.div>
+              <Link to={`/store/${item._id}`}>
+                <motion.div
+                  key={item._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-gray-50 rounded-lg shadow p-4 cursor-pointer hover:shadow-md"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-40 object-cover rounded-md mb-2"
+                  />
+                  <h3 className="text-lg font-semibold">{item.name}</h3>
+                  <p className="text-blue-600 font-medium">{item.price} DH</p>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>

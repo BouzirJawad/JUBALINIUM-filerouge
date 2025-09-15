@@ -94,7 +94,7 @@ export default function Store() {
                 {product.description}
               </p>
               <span className="mt-auto text-blue-600 font-bold">
-                ${product.price}
+                {product.price} DH
               </span>
             </div>
           ))}
